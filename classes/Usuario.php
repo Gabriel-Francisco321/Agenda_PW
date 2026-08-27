@@ -1,6 +1,6 @@
 <?php 
 
-include 'c:\xampp\htdocs\cursophp\agenda\config\database.php';
+include 'C:\xampp\htdocs\Cursophp\pprojects\Agenda_PW\config\database.php';
 
 class Usuario extends Entity
 {

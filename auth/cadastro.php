@@ -1,6 +1,6 @@
 <?php 
 
-include 'c:\xampp\htdocs\cursophp\agenda\classes\Usuario.php';
+include 'C:\xampp\htdocs\Cursophp\pprojects\Agenda_PW\classes\Usuario.php';
 
 $name = $_POST['name'] ?? null;
 $email = $_POST['email'] ?? null;
@@ -10,7 +10,9 @@ if ($email && $name && $password) {
     $user = new Usuario($name, $email, $password);
     $user->save();
 
+    session_start();
     $_SESSION['user_id'] = $user->getId();
+    header('Location: C:\xampp\htdocs\Cursophp\pprojects\Agenda_PW\index.php');
 }else {
     
     $mensage = "preencha todos os campos.";
