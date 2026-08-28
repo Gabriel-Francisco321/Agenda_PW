@@ -1,6 +1,6 @@
 <?php 
 
-include 'C:\xampp\htdocs\Cursophp\pprojects\Agenda_PW\config\database.php';
+require_once 'C:\xampp\htdocs\Agenda_PW\config\database.php';
 
 class Usuario extends Entity
 {
@@ -12,7 +12,6 @@ class Usuario extends Entity
     // construtor -------------------------------
     public function __construct(string|null $nome=null, string|null $email=null, string|null $senha=null, int|null $id =null)
     {
-        parent::__construct();
         
         if (!empty($id)) {
             $this->id = $id;
@@ -67,65 +66,85 @@ class Usuario extends Entity
             return "Campos vazios!";
         } else {
             $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?);";
-            $stmt = $this->pdo->prepare($sql);
+            $stmt = self::getPDO()->prepare($sql);
             $stmt->execute([
                 $this->nome,
                 $this->email,
                 $this->senha
             ]);
 
-            $this->find($this->pdo->lastInsertId());
+            $this->id = self::getPDO()->lastInsertId();
+            
         }
     }
 
-    public function find(int $id): void
+    public static function find(int $id)
     {
         $sql = "SELECT * FROM usuarios WHERE id = ?;";
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = self::getPDO()->prepare($sql);
         $stmt->execute([
             $id
         ]);
 
-        $user = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+        $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $this->entityToThis($user);
+        if (empty($user)) {
+            return null;
+        }
+
+        return self::entityToClass($user[0]);
     }
 
-    public function all()
+    public static function all()
     {
+        $pdo = new PDO('mysql:host=localhost;dbname=agenda;charset=utf8mb4', 'root', '');
+
         $sql = "SELECT * FROM usuarios;";
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        if (empty($users)) {
+            return [];
+        }
+
+        foreach ($users as $key => $user) {
+            $users[$key] = self::entityToClass($user);
+        }
+
         return $users;
     }
 
-    public function findByEmail(string $email): void
+    public static function findByEmail(string $email)
     {
+
         $sql = "SELECT * FROM usuarios WHERE email = ?";
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = self::getPDO()->prepare($sql);
         $stmt->execute([
             $email
         ]);
 
-        $user = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
+        $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $this->entityToThis($user);
+        if (empty($user)) {
+            return null;
+        }
+
+        return self::entityToClass($user[0]);
     }
 
-    public function existEmail(string $email)
+    public static function existEmail(string $email): bool
     {
         $sql = "SELECT * FROM usuarios WHERE email = ?";
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = self::getPDO()->prepare($sql);
         $stmt->execute([
             $email
         ]);
 
         $user = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 
-        return empty($user);
+        return !empty($user);
     }
 
     public function update()
@@ -134,7 +153,7 @@ class Usuario extends Entity
             return "Campos vazios!";
         } else {
             $sql = "UPDATE usuarios SET nome = ?, email = ?, senha = ? WHERE id = ?;";
-            $stmt = $this->pdo->prepare($sql);
+            $stmt = self::getPDO()->prepare($sql);
             $stmt->execute([
                 $this->nome,
                 $this->email,
@@ -147,7 +166,7 @@ class Usuario extends Entity
     public function delete()
     {
         $sql = "DELETE FROM usuarios WHERE id = ?;";
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = self::getPDO()->prepare($sql);
         $user = $stmt->execute([
             $this->id
         ]);
@@ -159,14 +178,6 @@ class Usuario extends Entity
     {
         $usuario = new Usuario($user['nome'], $user['email'], $user['senha'], $user['id']);
         return $usuario;
-    }
-
-    private function entityToThis(Array $user): void
-    {
-        $this->nome = $user['nome'];
-        $this->email = $user['email'];
-        $this->senha = $user['senha'];
-        $this->id = $user['id'];
     }
     
 }

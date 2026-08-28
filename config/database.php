@@ -2,14 +2,14 @@
 
 class Entity
 {
-    protected PDO $pdo;
 
-    private $dsn = "mysql:host=localhost;dbname=agenda;chaset=utf8mb4";
-    private $user = "root";
-    private $password = "";
+    private static $dsn = "mysql:host=localhost;dbname=agenda;chaset=utf8mb4";
+    private static $user = "root";
+    private static $password = "";
 
-    public function __construct() {
-        $this->pdo = $pdo = new PDO($this->dsn, $this->user, $this->password);;
+    protected static function getPDO (): PDO
+    {
+        return new PDO(self::$dsn, self::$user, self::$password);
     }
 }
 

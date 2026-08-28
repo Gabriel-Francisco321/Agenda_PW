@@ -1,6 +1,6 @@
 <?php 
 
-include 'C:\xampp\htdocs\Cursophp\pprojects\Agenda_PW\config\database.php';
+require_once 'C:\xampp\htdocs\Agenda_PW\config\database.php';
 
 class Apontamento extends Entity
 {
@@ -16,8 +16,6 @@ class Apontamento extends Entity
     // construtor -------------------------------
     public function __construct(string|null $titulo=null, string|null $descricao=null, string|null $data=null, string|null $inicio=null, string|null $fim=null, string|null $estado=null, int|null $id_usuario=null, int|null $id =null)
     {
-        parent::__construct();
-        
         if (!empty($id)) {
             $this->id = $id;
         }
@@ -115,7 +113,7 @@ class Apontamento extends Entity
             return "Campos vazios!";
         } else {
             $sql = "INSERT INTO apontamentos (titulo, descricao, data, inicio, fim, estado, id_usuario) VALUES (?, ?, ?, ?, ?, ?, ?);";
-            $stmt = $this->pdo->prepare($sql);
+            $stmt = self::getPDO()->prepare($sql);
             $stmt->execute([
                 $this->titulo,
                 $this->descricao,
@@ -126,43 +124,54 @@ class Apontamento extends Entity
                 $this->id_usuario
             ]);
 
-            $this->find($this->pdo->lastInsertId());
+            $this->id = self::getPDO()->lastInsertId();
         }
     }
 
-    public function find(int $id): void
+    public static function find(int $id): Apontamento
     {
         $sql = "SELECT * FROM apontamentos WHERE id = ?;";
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = self::getPDO()->prepare($sql);
         $stmt->execute([
             $id
         ]);
 
         $apontamento = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 
-        $this->entityToThis($apontamento);
+        return self::entityToClass($apontamento);
     }
 
-    public function findByUserId(int $id_usuario): array
+    public static function findByUserId(int $id_usuario): array
     {
-        $sql = "SELECT * FROM apontamentos WHERE id_usuario = ?;";
-        $stmt = $this->pdo->prepare($sql);
+
+        $sql = "SELECT * FROM apontamentos WHERE id_usuario = ? AND estado != ?;";
+        $stmt = self::getPDO()->prepare($sql);
         $stmt->execute([
-            $id_usuario
+            $id_usuario,
+            'FINALIZADO'
         ]);
 
         $apontamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        foreach ($apontamentos as $key => $apontamento) {
+            $apontamentos[$key] = self::entityToClass($apontamento);
+        }
+
         return $apontamentos;
     }
 
-    public function all()
+    public static function all()
     {
+
         $sql = "SELECT * FROM apontamentos;";
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = self::getPDO()->prepare($sql);
         $stmt->execute();
 
         $apontamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($apontamentos as $key => $apontamento) {
+            $apontamentos[$key] = self::entityToClass($apontamento);
+        }
 
         return $apontamentos;
     }
@@ -173,7 +182,7 @@ class Apontamento extends Entity
             return "Campos vazios!";
         } else {
             $sql = "UPDATE apontamentos SET titulo = ?, descricao = ?, data = ?, inicio = ?, fim = ?, estado = ?, id_usuario = ? WHERE id = ?;";
-            $stmt = $this->pdo->prepare($sql);
+            $stmt = self::getPDO()->prepare($sql);
             $stmt->execute([
                 $this->titulo,
                 $this->descricao,
@@ -190,7 +199,7 @@ class Apontamento extends Entity
     public function delete()
     {
         $sql = "DELETE FROM apontamentos WHERE id = ?;";
-        $stmt = $this->pdo->prepare($sql);
+        $stmt = self::getPDO()->prepare($sql);
         $apontamento = $stmt->execute([
             $this->id
         ]);
@@ -200,20 +209,8 @@ class Apontamento extends Entity
 
     public static function entityToClass(Array $apontamentoentity): Apontamento
     {
-        $apontamento = new Apontamento($apontamentoentity['titulo'], $apontamentoentity['descricao'], $apontamentoentity['data'], $apontamentoentity['id'], $apontamentoentity['inicio'], $apontamentoentity['fim'], $apontamentoentity['estado'], $apontamentoentity['id_usuario']);
+        $apontamento = new self($apontamentoentity['titulo'], $apontamentoentity['descricao'], $apontamentoentity['data'], $apontamentoentity['inicio'], $apontamentoentity['fim'], $apontamentoentity['estado'], $apontamentoentity['id_usuario'], $apontamentoentity['id']);
         return $apontamento;
-    }
-
-    private function entityToThis(Array $apontamentoentity): void
-    {
-        $this->titulo = $apontamentoentity['titulo'];
-        $this->descricao = $apontamentoentity['descricao'];
-        $this->data = $apontamentoentity['data'];
-        $this->inicio = $apontamentoentity['inicio'];
-        $this->fim = $apontamentoentity['fim'];
-        $this->estado = $apontamentoentity['estado'];
-        $this->id_usuario = $apontamentoentity['id_usuario'];
-        $this->id = $apontamentoentity['id'];
     }
     
 }
