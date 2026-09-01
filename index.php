@@ -10,9 +10,14 @@ if (!isset($_SESSION['user_id'])) {
 include 'C:\xampp\htdocs\Agenda_PW\classes\Usuario.php';
 include 'C:\xampp\htdocs\Agenda_PW\classes\Apontamento.php';
 
-$current_user = Usuario::find($_SESSION['user_id']);
-
-$apontamentos = Apontamento::findByUserId($current_user->getId());
+if (isset($_GET['search'])) {
+    $searchTerm = $_GET['search'];
+    $current_user = Usuario::find($_SESSION['user_id']);
+    $apontamentos = Apontamento::findByTitle($current_user->getId(), $searchTerm);
+} else {
+    $current_user = Usuario::find($_SESSION['user_id']);
+    $apontamentos = Apontamento::findByUserId($current_user->getId());
+}
 
 ?>
 
@@ -83,7 +88,7 @@ $apontamentos = Apontamento::findByUserId($current_user->getId());
         <div class="right">
             <form class="search" method="get" action="index.php">
                 <input type="text" name="search" id="search" placeholder="Pesquisar">
-                <button type="submit">Buscar</button>
+                <input type="submit" value="Buscar">
                 <button id="addTask" type="button">Nova Tarefa</button>
             </form>
             <div class="tasks">

@@ -160,6 +160,26 @@ class Apontamento extends Entity
         return $apontamentos;
     }
 
+    public static function findByTitle(int $id_usuario, string $titulo): array
+    {
+
+        $sql = "SELECT * FROM apontamentos WHERE titulo LIKE ? AND id_usuario = ? AND estado != ?;";
+        $stmt = self::getPDO()->prepare($sql);
+        $stmt->execute([
+            "%$titulo%",
+            $id_usuario,
+            'FINALIZADO'
+        ]);
+
+        $apontamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($apontamentos as $key => $apontamento) {
+            $apontamentos[$key] = self::entityToClass($apontamento);
+        }
+
+        return $apontamentos;
+    }
+
     public static function all()
     {
 

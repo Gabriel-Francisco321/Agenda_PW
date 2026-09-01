@@ -81,6 +81,7 @@ li{
 
 .logout-link,
 button,
+input[type="submit"],
 .finish-button {
     background-color: #f4f4f4;
     border: 1px solid var(--titles);
@@ -100,7 +101,7 @@ button,
     border: 1px solid red;
 }
 
-button[type="submit"],
+input[type="submit"],
 .finish-button {
     cursor: pointer;
 }
@@ -137,6 +138,7 @@ button[type="submit"],
     padding-top: 5.2rem;
     height: 100vh;
     max-height: 100vh;
+    max-width: 550px;
 }
 
 .left h2{
@@ -150,6 +152,8 @@ button[type="submit"],
     margin-bottom: 2rem;
     height: 70%;
     box-shadow: 5px 5px 20px rgba(56, 32, 26, 0.1);
+    max-width: 100%;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -159,6 +163,7 @@ button[type="submit"],
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    overflow: auto;
 }
 
 .task-title{
@@ -167,9 +172,11 @@ button[type="submit"],
     color: var(--text-color);
 }
 
-.task-top .task-description{
+.next-task .task-top .task-description{
     color: var(--muted-color);
     font-size: 1rem;
+    white-space: wrap;
+    hyphens: auto; 
 }
 
 .time{
@@ -245,7 +252,7 @@ tbody{
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    height: 45vh;
+    height: 50vh;
     overflow-y: auto;
 }
 
