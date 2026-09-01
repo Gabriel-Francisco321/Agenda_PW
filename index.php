@@ -24,15 +24,19 @@ $apontamentos = Apontamento::findByUserId($current_user->getId());
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
 </head>
 
 <body>
 
     <header class="header">
         <div class="container">
-            <a href="index.php" class="logo">
-                <h3>Agenda</h3>
-            </a>
+            <div class="logo">
+                <div class="logo-icon"></div>
+                <a href="index.php" class="logo-text">
+                    <h3>Agenda</h3>
+                </a>
+            </div>
 
             <span class="user-info">
                 <span class="user-name"><?php echo $current_user->getNome(); ?></span>
@@ -72,7 +76,7 @@ $apontamentos = Apontamento::findByUserId($current_user->getId());
 
             </div>
             <div class="total">
-                <p>Total <?php echo count($apontamentos); ?></p>
+                <span>TOTAL:</span> <span class="task-count"><?php echo count($apontamentos); ?></span>
             </div>
         </div>
 
@@ -110,9 +114,8 @@ $apontamentos = Apontamento::findByUserId($current_user->getId());
                                     <button
                                         type="button"
                                         class="edit-task-button"
-                                        data-id="<?php echo $apontamento->getId(); ?>"
-                                    >Editar</button>
-                                    <a href="dashboard/excluir.php?id=<?php echo $apontamento->getId(); ?>">Excluir</a>
+                                        data-id="<?php echo $apontamento->getId(); ?>">Editar</button>
+                                    <a href="dashboard/excluir.php?id=<?php echo $apontamento->getId(); ?>" class="delete-task">Excluir</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

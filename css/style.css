@@ -7,6 +7,7 @@
     --font-family: Arial, Helvetica, sans-serif;
     --border-color: #e1e1e8;
     --muted-color: #7c8498;
+    --attetion-color: #da2121;
 }
 
 *{
@@ -51,7 +52,21 @@ li{
     align-items: start;
 }
 
-.logo {
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-icon{
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 4px dashed var(--primary-color);
+    border-radius: 50%;
+    animation: logo-spin 5s linear infinite;
+}
+
+.logo-text {
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--text-color);
@@ -75,6 +90,14 @@ button,
     text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.logout-link:hover{
+    background-color: var(--attetion-color);
+    color: white;
+    opacity: 0.5;
+    border: 1px solid red;
 }
 
 button[type="submit"],
@@ -110,7 +133,7 @@ button[type="submit"],
     flex-basis: 30%;
     background-color: white;
     border-right: 1px solid var(--titles);
-    padding: 1.8rem;
+    padding: 1.8rem 2.2rem;
     padding-top: 5.2rem;
     height: 100vh;
     max-height: 100vh;
@@ -172,6 +195,22 @@ button[type="submit"],
     display: flex;
     gap: 2rem;
     justify-content: space-between;
+    color: var(--primary-color);
+}
+
+.total{
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    border-top: 1px solid var(--titles);
+    padding: 1rem;
+}
+
+.task-count{
     color: var(--primary-color);
 }
 
@@ -321,6 +360,11 @@ thead .section-title{
     cursor: pointer;
 }
 
+.task-actions .delete-task{
+    color: var(--attetion-color);
+    font-weight: bold;
+}
+
 .task-actions a:hover,
 .task-actions button:hover{
     text-decoration: underline;
@@ -459,22 +503,6 @@ thead .section-title{
     margin-top: 1rem;
     color: #c44343;
     font-size: 0.85rem;
-}
-
-@media (max-width: 800px){
-    .right{
-        padding: 4.2rem 1rem 1rem;
-    }
-
-    thead tr,
-    .task-row{
-        grid-template-columns: minmax(12rem, 1fr) 7rem 7rem;
-    }
-
-    .actions-heading,
-    .task-actions{
-        display: none;
-    }
 }
 
 body.modal-open{
@@ -671,4 +699,13 @@ body.modal-open{
 @keyframes modal-enter{
     from{ opacity: 0; transform: translateY(10px) scale(0.98); }
     to{ opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes logo-spin{
+    0%{ transform: rotate(0deg); }
+    20%{ transform: rotate(72deg); }
+    40%{ transform: rotate(144deg); }
+    60%{ transform: rotate(216deg); }
+    80%{ transform: rotate(288deg); }
+    100%{ transform: rotate(360deg); }
 }
