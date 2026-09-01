@@ -1,124 +1,139 @@
-# Agenda PW
+# Agenda PW 
 
-Aplicação web de agenda pessoal desenvolvida em PHP com MySQL, para cadastrar usuários e gerenciar tarefas como agendar, pesquisar, editar, concluir e excluir.
+Personal web calendar application developed in PHP with MySQL, for registering users and managing tasks such as scheduling, searching, editing, completing, and deleting.
 
-## Funcionalidades
+## Features
 
-- Cadastro de usuários
-- Login e logout
-- Adicionar tarefas
-- Listar tarefas por usuário
-- Pesquisar tarefas por título
-- Marcar tarefa como concluída
-- Excluir tarefas
-- Exibir a próxima tarefa pendente
+- User registration
+- Login and logout
+- Add tasks
+- List tasks by user
+- Search tasks by title
+- Mark task as completed
+- Delete tasks
+- View the next pending task
 
-## Tecnologias
+## Technologies
 
 - PHP 8+
 - MySQL / MariaDB
 - HTML5
 - CSS3
 - JavaScript
-- XAMPP (ambiente recomendado para execução local)
+- XAMPP (recommended environment for local execution)
 
-## Estrutura do projeto
+## Project Structure
 
 ```text
 Agenda_PW/
 ├── auth/
-│   ├── cadastro.php
-│   ├── login.php
-│   └── logout.php
+│ ├── cadastro.php
+│ ├── login.php
+│ └── logout.php
 ├── classes/
-│   ├── Apontamento.php
-│   └── Usuario.php
+│ ├── Apontamento.php
+│ └── Usuario.php
 ├── config/
-│   └── database.php
+│ └── database.php
 ├── css/
-│   └── style.css
+│ └── style.css
 ├── dashboard/
-│   ├── adicionar.php
-│   ├── alterar.php
-│   ├── concluir.php
-│   └── excluir.php
+│ ├── add.php
+│ ├── change.php
+│ ├── complete.php
+│ └── delete.php
 ├── img/
 ├── js/
-│   └── scripts.js
+│ └── scripts.js
 ├── migration/
-│   └── agenda.sql
+│ └── agenda.sql
 ├── index.php
 ├── .gitignore
 └── README.md
 ```
 
-## Pré-requisitos
+## Prerequisites
 
-- XAMPP instalado
-- PHP e MySQL ativos no XAMPP
-- Navegador web
-- Criar a pasta em: `c:/xampp/htdocs/`
+- XAMPP installed
+- PHP and MySQL active in XAMPP
+- Web browser
+- Create the folder in: `c:/xampp/htdocs/`
 
-## Configuração do banco de dados
+## Database Configuration
 
-1. Inicie o Apache e o MySQL no XAMPP.
-2. Acesse o phpMyAdmin em: http://localhost/phpmyadmin
-3. Importe o arquivo localizado em `migration/agenda.sql`.
+1. Start Apache and MySQL in XAMPP.
 
-O script cria a base de dados `agenda`, as tabelas `usuarios` e `apontamentos` e também já prepara algumas configurações iniciais do banco.
+2. Access phpMyAdmin at: http://localhost/phpmyadmin
+3. Import the file located in `migration/agenda.sql`.
 
-## Configuração da conexão
+The script creates the database `agenda`, the tables `usuarios` and `apontamentos`, and also prepares some initial database configurations.
 
-O arquivo de conexão está em `config/database.php`.
+## Connection Configuration
 
-Caso seu ambiente tenha credenciais diferentes, ajuste estas linhas:
+The connection file is in `config/database.php`.
+
+If your environment has different credentials, adjust these lines:
 
 ```php
 private static $dsn = "mysql:host=localhost;dbname=agenda;chaset=utf8mb4";
+
 private static $user = "root";
-private static $password = "";
+
+private static $senha = "";
+
 ```
 
-## Execução da aplicação
+## Application Execution
 
-1. Abra a pasta do projeto dentro do diretório do XAMPP, normalmente:
+1. Open the project folder within the XAMPP directory, normally:
 
 ```text
 C:\xampp\htdocs\Agenda_PW
+
 ```
 
-2. Inicie o Apache no XAMPP.
-3. Acesse no navegador:
+2. Start Apache in XAMPP.
+
+3. Access in your browser:
 
 ```text
 http://localhost/Agenda_PW
+
 ```
 
-4. Caso não tenha conta, vá para:
+4. If you don't have an account, go to:
 
 ```text
 http://localhost/Agenda_PW/auth/cadastro.php
+
 ```
 
-## Fluxo de uso
+## Usage Flow
 
-1. Crie uma conta.
-2. Faça login.
-3. Adicione tarefas pela interface principal.
-4. Use a pesquisa para localizar tarefas por nome.
-5. Marque tarefas como concluídas quando necessário.
-6. Edite ou exclua registros conforme a necessidade.
+1. Create an account.
 
-## Observações importantes
+2. Log in.
 
-- A aplicação usa sessões para manter o usuário autenticado.
-- O projeto depende de caminhos absolutos em alguns arquivos, por isso é importante manter o projeto na pasta correta do XAMPP.
-- A lógica de navegação e autenticação está em `index.php`, `auth/` e `dashboard/`.
+3. Add tasks through the main interface.
 
-## Licença
+4. Use the search to locate tasks by name.
 
-Este projeto é destinado a fins educacionais e de demonstração.
+5. Mark tasks as completed when necessary.
 
-## Desenvolvedor
+6. Edit or delete records as needed.
 
-Projeto em andamento para organização pessoal de tarefas e rotina.
+## Important Notes
+
+- The application uses sessions to keep the user authenticated.
+
+- The project relies on absolute paths in some files, so it's important to keep the project in the correct XAMPP folder.
+
+- The navigation and authentication logic is in `index.php`, `auth/`, and `dashboard/`.
+
+## License
+
+This project is intended for educational and demonstration purposes.
+
+## Developer
+
+Project in progress for personal task and routine organization.
