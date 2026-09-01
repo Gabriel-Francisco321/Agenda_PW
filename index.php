@@ -92,9 +92,9 @@ $apontamentos = Apontamento::findByUserId($current_user->getId());
                             <th class="section-title actions-heading">Ações</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="padding-top: 1rem;">
                         <?php foreach ($apontamentos as $apontamento) : ?>
-                            <tr class="task-row <?php echo $apontamento === $next_task ? 'is-next' : ''; ?>">
+                            <tr ondblclick="changeNext(<?php echo $apontamento->getId(); ?>)" class="task-row <?php echo $apontamento === $next_task ? 'is-next' : ''; ?>" id="task<?php echo $apontamento->getId(); ?>">
                                 <td class="task-info task-details">
                                     <strong><?php echo $apontamento->getTitulo(); ?></strong>
                                     <span class="task-description"><?php echo $apontamento->getDescricao(); ?></span>
@@ -103,7 +103,9 @@ $apontamentos = Apontamento::findByUserId($current_user->getId());
                                     <span><?php echo $apontamento->getData(); ?></span>
                                     <span><?php echo "{$apontamento->getInicio()} - {$apontamento->getFim()}"; ?></span>
                                 </td>
-                                <td><span class="status-badge status-<?php echo strtolower($apontamento->getEstado()); ?>"><?php echo $apontamento->getEstado(); ?></span></td>
+                                <td>
+                                    <span class="status-badge status-<?php echo strtolower($apontamento->getEstado()); ?>"><?php echo $apontamento->getEstado(); ?></span>
+                                </td>
                                 <td class="task-actions">
                                     <button
                                         type="button"

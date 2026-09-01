@@ -1,12 +1,14 @@
 :root{
     --primary-color: rgb(71, 105, 199);
     --primary-bg: rgba(71, 105, 199, 0.15);
+    --titles: #75809a;
     --secondary-color: #f4f4f4;
     --text-color: #333;
     --font-family: Arial, Helvetica, sans-serif;
     --border-color: #e1e1e8;
     --muted-color: #7c8498;
 }
+
 *{
     margin: 0;
     padding: 0;
@@ -27,13 +29,13 @@ li{
     font-size: 1.15rem;
     margin-bottom: 1.5rem;
     margin-top: 1.5rem;
-    color: #aaa;
+    color: var(--titles);
 }
 
 .header{
     background-color: white;
     padding: 1.5rem;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--titles);
     position: fixed;
     top: 0;
     right: 0;
@@ -65,11 +67,11 @@ li{
 .logout-link,
 button,
 .finish-button {
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+    border: 1px solid var(--titles);
     border-radius: 5px;
     padding: 0.5rem 1rem;
-    color: #aaa;
+    color: var(--titles);
     text-decoration: none;
     font-size: 1rem;
     font-weight: bold;
@@ -107,10 +109,11 @@ button[type="submit"],
 .left{
     flex-basis: 30%;
     background-color: white;
-    border-right: 1px solid #ccc;
-    padding: 2rem;
-    margin-top: 4.2rem;
+    border-right: 1px solid var(--titles);
+    padding: 1.8rem;
+    padding-top: 5.2rem;
     height: 100vh;
+    max-height: 100vh;
 }
 
 .left h2{
@@ -119,10 +122,11 @@ button[type="submit"],
 
 .next-task{
     background-color: var(--primary-bg);
-    padding: 1rem;
+    padding: 1rem 2rem;
     border-radius: 15px;
     margin-bottom: 2rem;
     height: 70%;
+    box-shadow: 5px 5px 20px rgba(56, 32, 26, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -146,13 +150,23 @@ button[type="submit"],
 }
 
 .time{
+    width: 100%;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     align-items: center;
 }
 
+.time form{
+    width: 100%;
+    .finish-button{
+        width: 100%;
+    }
+}
+
 .time div{
+    width: 100%;
     font-size: 1.1rem;
     font-weight: 600;
     display: flex;
@@ -163,15 +177,16 @@ button[type="submit"],
 
 .right{
     flex-basis: 70%;
-    padding: 3rem 0;
+    padding-top: 4.5rem;
     height: 100vh;
+    max-height: 100vh;
 }
 
 .search{
     background-color: white;
     padding: 2rem;
     padding-right: 5rem;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--titles);
     display: flex;
     gap: 2rem;
     align-items: center;
@@ -182,7 +197,7 @@ input[type="text"]{
     width: 100%;
     padding: 0.5rem;
     background-color: var(--secondary-color);
-    border: 1px solid #ccc;
+    border: 1px solid var(--titles);
     border-radius: 5px;
     font-size: 1rem;
 }
@@ -216,7 +231,6 @@ thead tr{
 
 thead .section-title{
     margin: 0 0 0.5rem;
-    color: #75809a;
     font-size: 0.75rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
@@ -283,12 +297,6 @@ thead .section-title{
     color: #a66b00;
     font-size: 0.75rem;
     white-space: nowrap;
-}
-
-.status-em\ andamento,
-.status-conclu\ uído{
-    background-color: #eeeaff;
-    color: #6659dc;
 }
 
 .task-actions{
@@ -406,7 +414,7 @@ thead .section-title{
 .auth-form input{
     width: 100%;
     padding: 0.82rem 1rem;
-    border: 1px solid #e1e2e8;
+    border: 1px solid var(--titles);
     border-radius: 11px;
     background-color: #f8f8f7;
     color: #303344;
@@ -503,7 +511,7 @@ body.modal-open{
     justify-content: space-between;
     gap: 1rem;
     padding: 1.75rem 1.75rem 1.25rem;
-    border-bottom: 1px solid #e6e6eb;
+    border-bottom: 1px solid var(--titles);
 }
 
 .modal-header h2{
@@ -554,7 +562,7 @@ body.modal-open{
     width: 100%;
     margin-bottom: 0.55rem;
     padding: 0.75rem 0.85rem;
-    border: 1px solid #e0e1e7;
+    border: 1px solid var(--titles);
     border-radius: 12px;
     background: #f8f8f8;
     color: #252638;
@@ -568,7 +576,8 @@ body.modal-open{
 }
 
 .task-form input:focus,
-.task-form textarea:focus{
+.task-form textarea:focus,
+.search input:focus{
     outline: 2px solid rgba(102, 89, 220, 0.25);
     border-color: #6659dc;
 }
@@ -605,7 +614,7 @@ body.modal-open{
     gap: 0.35rem;
     min-height: 2.15rem;
     margin: 0;
-    border: 1px solid #e0e1e7;
+    border: 1px solid var(--titles);
     border-radius: 12px;
     color: #8b91ae;
     font-size: 0.75rem;
@@ -638,7 +647,7 @@ body.modal-open{
     gap: 0.75rem;
     margin: 0 -1.75rem;
     padding: 1rem 1.75rem 0.75rem;
-    border-top: 1px solid #e6e6eb;
+    border-top: 1px solid var(--titles);
 }
 
 .modal-actions button{
@@ -650,7 +659,7 @@ body.modal-open{
 
 .cancel-button{
     color: #8b91ae;
-    border-color: #e0e1e7;
+    border-color: var(--titles);
 }
 
 .create-button{
@@ -662,10 +671,4 @@ body.modal-open{
 @keyframes modal-enter{
     from{ opacity: 0; transform: translateY(10px) scale(0.98); }
     to{ opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@media (max-width: 520px){
-    .modal-header,
-    .task-form{ padding-left: 1.25rem; padding-right: 1.25rem; }
-    .modal-actions{ margin-left: -1.25rem; margin-right: -1.25rem; padding-left: 1.25rem; padding-right: 1.25rem; }
 }

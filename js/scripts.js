@@ -44,6 +44,42 @@ function openEditModal(button) {
     toggleTaskModal(true);
 }
 
+function changeNext(id) {
+    const nextTask = document.querySelector(".left .next-task");
+    const finishForm = nextTask.querySelector("form");
+    const taskrow = document.getElementById(`task${id}`);
+
+    if (!taskrow || !nextTask) {
+        return;
+    }
+
+    const cells = taskrow.querySelectorAll("td");
+    const task = {
+        id: id,
+        titulo: cells[0].querySelector("strong").textContent.trim(),
+        descricao: cells[0].querySelector(".task-description").textContent.trim(),
+        data: cells[1].querySelectorAll("span")[0].textContent.trim(),
+        inicio: cells[1].querySelectorAll("span")[1].textContent.trim().split(' - ')[0],
+        estado: cells[2].querySelector(".status-badge").textContent.trim()
+    };
+
+    if (finishForm) {
+        const taskIdInput = finishForm.querySelector('input[name="id"]');
+        if (taskIdInput) {
+            taskIdInput.value = String(task.id);
+        }
+    }
+
+    nextTask.querySelector(".task-top .status-badge").textContent = task.estado;
+    nextTask.querySelector(".task-top .task-title").textContent = task.titulo;
+    nextTask.querySelector(".task-top .task-description").textContent = task.descricao;
+    nextTask.querySelector(".time div .task-date").textContent = task.data;
+    nextTask.querySelector(".time div .task-time").textContent = task.inicio;
+
+    document.querySelectorAll(".task-row").forEach(row => row.classList.remove("is-next"));
+    taskrow.classList.add("is-next");
+}
+
 function toggleTaskModal(show) {
     taskModal.classList.toggle('is-open', show);
     taskModal.setAttribute('aria-hidden', String(!show));

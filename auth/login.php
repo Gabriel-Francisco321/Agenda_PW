@@ -1,6 +1,6 @@
 <?php
 
-if ($_SESSION['user_id']) {
+if (isset($_SESSION['user_id'])) {
     header('Location: http://localhost/Agenda_PW/index.php');
 }
 
