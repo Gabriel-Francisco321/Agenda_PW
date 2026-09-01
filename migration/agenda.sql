@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27-Ago-2026 às 02:14
+-- Tempo de geração: 01-Set-2026 às 21:48
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -26,53 +26,38 @@ USE `agenda`;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `apontamento`
+-- Estrutura da tabela `apontamentos`
 --
 
-DROP TABLE IF EXISTS `apontamento`;
-CREATE TABLE IF NOT EXISTS `apontamento` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `apontamentos` (
+  `id` int(10) UNSIGNED NOT NULL,
   `titulo` varchar(200) NOT NULL,
   `descricao` text DEFAULT NULL,
   `data` date NOT NULL,
   `inicio` time DEFAULT NULL,
   `fim` time DEFAULT NULL,
   `estado` enum('AGENDADO','EM PROCESSO','FINALIZADO') NOT NULL DEFAULT 'AGENDADO',
-  `id_usuario` int(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `registrar` (`id_usuario`)
+  `id_usuario` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- RELACIONAMENTOS PARA TABELAS `apontamento`:
---   `id_usuario`
---       `usuarios` -> `id`
+-- Truncar tabela antes do insert `apontamentos`
 --
 
---
--- Truncar tabela antes do insert `apontamento`
---
+TRUNCATE TABLE `apontamentos`;
 
-TRUNCATE TABLE `apontamento`;
 -- --------------------------------------------------------
 
 --
 -- Estrutura da tabela `usuarios`
 --
 
-DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usuarios` (
+  `id` int(10) UNSIGNED NOT NULL,
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `senha` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- RELACIONAMENTOS PARA TABELAS `usuarios`:
---
+  `senha` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Truncar tabela antes do insert `usuarios`
@@ -80,23 +65,47 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 TRUNCATE TABLE `usuarios`;
 --
--- Extraindo dados da tabela `usuarios`
+-- Índices para tabelas despejadas
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
-(1, 'gabriel', 'stefangabito12@gmail.com', 'abc123'),
-(2, 'Edgar', 'edgardinho@gmail.com', '12345'),
-(3, 'Gabriel Francisco', 'gabriel.ot.fr12@gmail.com', 'abc123'),
-(4, 'Francisco', 'gabi@gmail.com', '654321');
+--
+-- Índices para tabela `apontamentos`
+--
+ALTER TABLE `apontamentos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `registrar` (`id_usuario`);
+
+--
+-- Índices para tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT de tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `apontamentos`
+--
+ALTER TABLE `apontamentos`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Restrições para despejos de tabelas
 --
 
 --
--- Limitadores para a tabela `apontamento`
+-- Limitadores para a tabela `apontamentos`
 --
-ALTER TABLE `apontamento`
+ALTER TABLE `apontamentos`
   ADD CONSTRAINT `registrar` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
