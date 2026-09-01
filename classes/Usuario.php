@@ -72,8 +72,6 @@ class Usuario extends Entity
                 $this->email,
                 $this->senha
             ]);
-
-            $this->id = self::getPDO()->lastInsertId();
             
         }
     }

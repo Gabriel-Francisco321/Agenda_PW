@@ -14,6 +14,8 @@ if (trim($email) && trim($name) && trim($password)) {
         $user = new Usuario(trim($name), trim($email), trim($password));
         $user->save();
 
+        $user = Usuario::findByEmail($email);
+
         session_start();
         $_SESSION['user_id'] = $user->getId();
         header('Location: http://localhost/Agenda_PW/index.php');
